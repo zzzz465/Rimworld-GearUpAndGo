@@ -44,7 +44,11 @@ namespace GearUpAndGo
 				
 				//Find apparel
 				JobGiver_OptimizeApparel optimizer = pawn.thinker.TryGetMainTreeThinkNode<JobGiver_OptimizeApparel>();
-				if (optimizer == null) return;
+				if (optimizer == null)
+				{
+					// Try to create a new optimizer if none exists
+					optimizer = new JobGiver_OptimizeApparel();
+				}
 
 				pawn.mindState?.Notify_OutfitChanged();// Lie so that it re-equips things
 				ThinkResult result = optimizer.TryIssueJobPackage(pawn, new JobIssueParams()); //TryGiveJob is protected :(
